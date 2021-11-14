@@ -19,7 +19,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.sendall(msg)
         data = s.recv(64000).decode()
         if sendStr == "exit":
-            print('Shutting down client...')
+            print('Shutting Down Client...')
             break
         else:
             print(data)
