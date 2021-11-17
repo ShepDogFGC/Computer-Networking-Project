@@ -45,11 +45,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     resp = requests.get('https://content.osu.edu/v2/bus/routes/' + route + '/vehicles')
                     if(resp.status_code == 200):
                         bus_data = resp.json()['data']['vehicles']
-                        #print(json.dumps(resp.json(), indent=4, sort_keys=True))
+                        #print(json.dumps(bus_data, indent=4, sort_keys=True))
                         if bus_data != []:
+                            msg = ""
                             for bus in bus_data:
-                                msg = str("Bus Destination: " + bus_data['destination'] + "\nIs Bus Delayed: " + bus_data['delayed'] + "\nBus Speed: " + bus_data['speed'] + " MPH")
-                                conn.sendall(msg.encode())
+                                msg += str("\nBus ID: " + str(bus['id']) + "\nBus Destination: " + bus['destination'] + "\nIs Bus Delayed: " + str(bus['delayed']) + "\nBus Speed: " + str(bus['speed']) + " MPH\n")
+                            conn.sendall(msg.encode())
                         else:
                             msg = str("\nNo Active Busses!\n")
                             conn.sendall(msg.encode())
